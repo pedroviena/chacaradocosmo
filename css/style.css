@@ -1,9 +1,9 @@
 :root {
-  --background: #03140C;
+  --background: #2C3A30;
   --foreground: #F8FAF9;
   --card: rgba(255, 255, 255, 0.03);
   --card-foreground: #F8FAF9;
-  --popover: #080A09;
+  --popover: #212C24;
   --popover-foreground: #F8FAF9;
   --primary: #D4AF37;
   --primary-foreground: #000000;

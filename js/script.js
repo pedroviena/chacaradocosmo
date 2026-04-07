@@ -106,6 +106,65 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Hero Alt Scroll Math (Split Layout)
+  const heroAltSection = document.getElementById('hero-alt');
+  const heroAltGrid = document.getElementById('hero-alt-grid');
+  const heroAltLeftCol = document.getElementById('hero-alt-left-col');
+  const heroAltCenterCol = document.getElementById('hero-alt-center-col');
+  const heroAltRightCol = document.getElementById('hero-alt-right-col');
+  const heroAltTextOverlay = document.getElementById('hero-alt-text-overlay');
+
+  function handleHeroAltScroll() {
+    if (!heroAltSection) return;
+    const rect = heroAltSection.getBoundingClientRect();
+    const scrollableHeight = window.innerHeight * 2.5;
+    const scrolled = -rect.top;
+    const progress = Math.max(0, Math.min(1, scrolled / scrollableHeight));
+
+    const textOpacity = Math.max(0, 1 - (progress / 0.15));
+    const imageProgress = Math.max(0, Math.min(1, (progress - 0.1) / 0.9));
+
+    const centerWidth = 100 - (imageProgress * 56);
+    const sideWidth = imageProgress * 28;
+    const sideOpacity = imageProgress;
+    const gap = imageProgress * 16;
+    const paddingOuter = imageProgress * 24;
+
+    const sideTranslateLeft = -100 + (imageProgress * 100);
+    const sideTranslateRight = 100 - (imageProgress * 100);
+    const centerBorderRadius = imageProgress * 24;
+
+    if (heroAltTextOverlay) {
+      heroAltTextOverlay.style.opacity = textOpacity;
+      heroAltTextOverlay.style.transform = `translateY(${progress * 150}px)`;
+    }
+
+    if (heroAltGrid) {
+      heroAltGrid.style.gap = gap + 'px';
+      heroAltGrid.style.paddingLeft = paddingOuter + 'px';
+      heroAltGrid.style.paddingRight = paddingOuter + 'px';
+    }
+
+    if (heroAltLeftCol) {
+      heroAltLeftCol.style.width = sideWidth + '%';
+      heroAltLeftCol.style.gap = gap + 'px';
+      heroAltLeftCol.style.transform = `translateX(${sideTranslateLeft}%) scale(${0.8 + (imageProgress * 0.2)})`;
+      heroAltLeftCol.style.opacity = sideOpacity;
+    }
+
+    if (heroAltCenterCol) {
+      heroAltCenterCol.style.width = centerWidth + '%';
+      heroAltCenterCol.style.borderRadius = centerBorderRadius + 'px';
+    }
+
+    if (heroAltRightCol) {
+      heroAltRightCol.style.width = sideWidth + '%';
+      heroAltRightCol.style.gap = gap + 'px';
+      heroAltRightCol.style.transform = `translateX(${sideTranslateRight}%) scale(${0.8 + (imageProgress * 0.2)})`;
+      heroAltRightCol.style.opacity = sideOpacity;
+    }
+  }
+
   function handleTechScroll() {
     // Reveal Text scroll for description
     if (techTextSection) {
@@ -387,6 +446,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function onScroll() {
     requestAnimationFrame(() => {
       handleHeroScroll();
+      handleHeroAltScroll();
       handleTechScroll();
       handleScrollSpy();
     });
