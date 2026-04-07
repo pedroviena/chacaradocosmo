@@ -127,9 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const techHero = document.getElementById('tech-hero-sticky');
     if (techHero) {
       const rect = techHero.getBoundingClientRect();
-      // start fading when top is 0
-      const scrolled = -rect.top + (window.innerHeight * 0.5); // fade quickly after scrolling half screen
-      const p = Math.max(0, Math.min(1, scrolled / (window.innerHeight * 0.5)));
+      // start fading slowly when user has scrolled a reasonable amount
+      const scrolled = -rect.top - (window.innerHeight * 0.5); // Give time to read before fading
+      const p = Math.max(0, Math.min(1, scrolled / window.innerHeight));
 
       const words = techHero.querySelectorAll('.tech-word');
       words.forEach((word, idx) => {
